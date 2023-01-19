@@ -104,7 +104,6 @@ region
 titles <- c("Philosophers_Stone", "Chamber_of_Secrets", "Prisoner_of_Azkaban", "Goblet_of_Fire", "Order_of_the_Phoenix", "Half_Blood_Prince", "Deathly_Hallows_1", "Deathly_Hallows_2")
 titles
 ```
-
 Name the columns using `colnames()` with the vector region.
 ```{r}
 colnames(harry_potter_matrix) <- region
