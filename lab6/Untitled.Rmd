@@ -1,0 +1,46 @@
+---
+title: "Penguins"
+output: 
+  html_document: 
+    keep_md: yes
+date: "2023-01-26"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(janitor)
+```
+
+```{r}
+ecosphere<-readr::read_csv("data/ecs21351-sup-0003-SupplementS1.csv",skip=2)
+```
+
+```{r}
+names(ecosphere)
+```
+```{r}
+ecosphere<-ecosphere %>% clean_names()
+names(ecosphere)
+```
+```{r}
+summary(ecosphere)
+```
+```{r}
+ecosphere %>% 
+  tabyl(diet) %>% 
+  arrange(desc(n))
+```
+```{r}
+ecosphere %>% 
+  filter(diet=="Vegetation") %>% 
+  select(family,diet) %>% 
+  tabyl(diet)
+```
+```{r}
+
+```
+
