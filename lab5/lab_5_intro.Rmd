@@ -1,0 +1,77 @@
+---
+title: "Lab 5 Intro"
+date: "`r Sys.Date()`"
+output: 
+  ioslides_presentation: 
+    keep_md: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library("jpeg")
+```
+
+## Setup
+1. Login to the lab computer (please don't use your personal computer).  
+2. Navigate to github.com and login.   
+2. Copy your repository to the desktop.   
+5. Copy the class repository to the desktop (https://github.com/jmledford3115/datascibiol).  
+6. Copy the files for today's lab from the class repository and paste them into **your** repository.  
+7. Open today's lab in RStudio.  
+
+## Review from last time
+### *With a partner, discuss the following questions*
+1. What are the characteristics of `tidy` data? Every cell has unique value.    
+2. What is the difference between `select` and `filter`? Select is used to operate between columns, filter is for operating betwee rows.
+3. When is your first midterm? January 31st
+
+## Warm-up
+1. Load the bison data.
+```{r}
+bison<-readr::read_csv("data/bison.csv")
+```
+```{r}
+library("tidyverse")
+```
+
+2. What are the dimesions and structure of the data?
+```{r}
+ dim(bison)
+```
+```{r}
+glimpse(bison)
+```
+
+3. We are only interested in code, sex, weight, year of birth. Restrict the data to these variables and store the dataframe as a new object.
+```{r}
+colnames(bison)
+```
+```{r}
+bison_info <-select(bison, "data_code", "animal_sex", "animal_weight", "animal_yob")
+bison_info
+```
+
+4. Pull out the animals born between 1980-1990.
+```{r}
+bison_yob<-filter(bison_info, animal_yob>=1980 & animal_yob<=1990)
+bison_yob
+```
+
+5. How many male and female bison are represented between 1980-1990?
+```{r}
+bison_m <- filter(bison_yob, animal_sex=="M")
+bison_f<-filter(bison_yob, animal_sex=="F")
+```
+
+6. Between 1980-1990, were males or females larger on average?
+```{r}
+mean(bison_f$animal_weight)
+```
+```{r}
+mean(bison_m$animal_weight)
+```
+
+
+
+
+
