@@ -276,7 +276,7 @@ bad_guys<-superhero_info %>%
 6. For the good guys, use the `tabyl` function to summarize their "race".
 
 ```r
-tabyl(good_guys, race)
+tabyl(good_guys,race)
 ```
 
 ```
@@ -343,33 +343,29 @@ good_guys %>%
 ## 3 Thor Girl Asgardian
 ```
 
-```r
-#Sif, Thor, and Thor Girl.
-```
-
 8. Among the bad guys, who are the male humans over 200 inches in height?
 
 ```r
 bad_guys %>% 
-  filter(height>=200) %>% 
-  select(name,height)
+  filter(height>=200 & gender=="Male") %>% 
+  select(name,gender,height)
 ```
 
 ```
-## # A tibble: 25 × 2
-##    name           height
-##    <chr>           <dbl>
-##  1 Abomination       203
-##  2 Alien             244
-##  3 Amazo             257
-##  4 Apocalypse        213
-##  5 Bane              203
-##  6 Bloodaxe          218
-##  7 Darkseid          267
-##  8 Doctor Doom       201
-##  9 Doctor Doom II    201
-## 10 Doomsday          244
-## # … with 15 more rows
+## # A tibble: 22 × 3
+##    name           gender height
+##    <chr>          <chr>   <dbl>
+##  1 Abomination    Male      203
+##  2 Alien          Male      244
+##  3 Amazo          Male      257
+##  4 Apocalypse     Male      213
+##  5 Bane           Male      203
+##  6 Darkseid       Male      267
+##  7 Doctor Doom    Male      201
+##  8 Doctor Doom II Male      201
+##  9 Doomsday       Male      244
+## 10 Killer Croc    Male      244
+## # … with 12 more rows
 ```
 
 9. OK, so are there more good guys or bad guys that are bald (personal interest)?
@@ -421,7 +417,7 @@ bad_guys %>%
 ```
 
 ```r
-#More good guys are bald than bad guys.
+#There are more bald good guys than bald bad guys.
 ```
 
 10. Let's explore who the really "big" superheros are. In the `superhero_info` data, which have a height over 200 or weight greater than or equal to 450?
@@ -454,43 +450,43 @@ superhero_info %>%
 ```r
 superhero_info %>% 
   filter(height>300) %>% 
-  select(name,height,weight)
+  select(name,height)
 ```
 
 ```
-## # A tibble: 8 × 3
-##   name          height weight
-##   <chr>          <dbl>  <dbl>
-## 1 Fin Fang Foom   975      18
-## 2 Galactus        876      16
-## 3 Groot           701       4
-## 4 MODOK           366     338
-## 5 Onslaught       305     405
-## 6 Sasquatch       305     900
-## 7 Wolfsbane       366     473
-## 8 Ymir            305.     NA
+## # A tibble: 8 × 2
+##   name          height
+##   <chr>          <dbl>
+## 1 Fin Fang Foom   975 
+## 2 Galactus        876 
+## 3 Groot           701 
+## 4 MODOK           366 
+## 5 Onslaught       305 
+## 6 Sasquatch       305 
+## 7 Wolfsbane       366 
+## 8 Ymir            305.
 ```
 
 12. ...and the superheros over 450 in weight. Bonus question! Why do we not have 16 rows in question #10?
 
 ```r
 superhero_info %>% 
-  filter(weight>=450) %>% 
-  select(name,height,weight)
+  filter(weight>450) %>% 
+  select(name,weight)
 ```
 
 ```
-## # A tibble: 8 × 3
-##   name       height weight
-##   <chr>       <dbl>  <dbl>
-## 1 Bloodaxe    218      495
-## 2 Darkseid    267      817
-## 3 Giganta      62.5    630
-## 4 Hulk        244      630
-## 5 Juggernaut  287      855
-## 6 Red Hulk    213      630
-## 7 Sasquatch   305      900
-## 8 Wolfsbane   366      473
+## # A tibble: 8 × 2
+##   name       weight
+##   <chr>       <dbl>
+## 1 Bloodaxe      495
+## 2 Darkseid      817
+## 3 Giganta       630
+## 4 Hulk          630
+## 5 Juggernaut    855
+## 6 Red Hulk      630
+## 7 Sasquatch     900
+## 8 Wolfsbane     473
 ```
 
 ## Height to Weight Ratio
@@ -498,7 +494,7 @@ superhero_info %>%
 
 ```r
 superhero_info %>% 
-  filter(weight>=600 & height<=300) %>% 
+  filter(height<=300 & weight>600) %>% 
   select(name,height,weight)
 ```
 
@@ -722,30 +718,30 @@ superhero_powers %>%
 ## # … with 87 more rows
 ```
 
-```r
-view(superhero_powers)
-```
-
 ## Your Favorite
 15. Pick your favorite superhero and let's see their powers!
 
 ```r
 superhero_powers %>% 
-  filter(hero_names=="Black Widow")
+  filter(hero_names=="Black Widow") %>% 
+  select_if(all_vars(.=="TRUE"))
 ```
 
 ```
-## # A tibble: 1 × 168
-##   hero_…¹ agility accel…² lante…³ dimen…⁴ cold_…⁵ durab…⁶ stealth energ…⁷ flight
-##   <chr>   <lgl>   <lgl>   <lgl>   <lgl>   <lgl>   <lgl>   <lgl>   <lgl>   <lgl> 
-## 1 Black … TRUE    FALSE   FALSE   FALSE   FALSE   FALSE   TRUE    FALSE   FALSE 
-## # … with 158 more variables: danger_sense <lgl>, underwater_breathing <lgl>,
-## #   marksmanship <lgl>, weapons_master <lgl>, power_augmentation <lgl>,
-## #   animal_attributes <lgl>, longevity <lgl>, intelligence <lgl>,
-## #   super_strength <lgl>, cryokinesis <lgl>, telepathy <lgl>,
-## #   energy_armor <lgl>, energy_blasts <lgl>, duplication <lgl>,
-## #   size_changing <lgl>, density_control <lgl>, stamina <lgl>,
-## #   astral_travel <lgl>, audio_control <lgl>, dexterity <lgl>, …
+## Warning: The `.predicate` argument of `select_if()` can't contain quosures. as of dplyr
+## 0.8.3.
+## ℹ Please use a one-sided formula, a function, or a function name.
+## ℹ The deprecated feature was likely used in the base package.
+##   Please report the issue to the authors.
+```
+
+```
+## # A tibble: 1 × 9
+##   agility stealth marksmanship weapons…¹ longe…² intel…³ stamina peak_…⁴ refle…⁵
+##   <lgl>   <lgl>   <lgl>        <lgl>     <lgl>   <lgl>   <lgl>   <lgl>   <lgl>  
+## 1 TRUE    TRUE    TRUE         TRUE      TRUE    TRUE    TRUE    TRUE    TRUE   
+## # … with abbreviated variable names ¹​weapons_master, ²​longevity, ³​intelligence,
+## #   ⁴​peak_human_condition, ⁵​reflexes
 ```
 
 ## Push your final code to GitHub!

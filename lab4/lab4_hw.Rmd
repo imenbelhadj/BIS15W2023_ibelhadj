@@ -72,7 +72,8 @@ taxa
 
 **5. The variable `taxon` identifies the large, common name groups of the species represented in `homerange`. Make a table the shows the counts for each of these `taxon`.**  
 ```{r}
-taxa %>% group_by(species, taxon) %>% tally()
+taxon_counts <-table(homerange$taxon)
+taxon_counts
 ```
 
 **6. The species in `homerange` are also classified into trophic guilds. How many species are represented in each trophic guild.**  

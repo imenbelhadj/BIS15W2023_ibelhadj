@@ -103,7 +103,7 @@ bad_guys<-superhero_info %>%
 
 6. For the good guys, use the `tabyl` function to summarize their "race".
 ```{r}
-tabyl(good_guys, race)
+tabyl(good_guys,race)
 ```
 
 7. Among the good guys, Who are the Asgardians?
@@ -111,14 +111,13 @@ tabyl(good_guys, race)
 good_guys %>% 
   filter(race=="Asgardian") %>% 
   select(name,race)
-#Sif, Thor, and Thor Girl.
 ```
 
 8. Among the bad guys, who are the male humans over 200 inches in height?
 ```{r}
 bad_guys %>% 
-  filter(height>=200) %>% 
-  select(name,height)
+  filter(height>=200 & gender=="Male") %>% 
+  select(name,gender,height)
 ```
 
 9. OK, so are there more good guys or bad guys that are bald (personal interest)?
@@ -129,7 +128,7 @@ good_guys %>%
 ```{r}
 bad_guys %>% 
   filter(hair_color=="No Hair")
-#More good guys are bald than bad guys.
+#There are more bald good guys than bald bad guys.
 ```
 
 10. Let's explore who the really "big" superheros are. In the `superhero_info` data, which have a height over 200 or weight greater than or equal to 450?
@@ -143,21 +142,21 @@ superhero_info %>%
 ```{r}
 superhero_info %>% 
   filter(height>300) %>% 
-  select(name,height,weight)
+  select(name,height)
 ```
 
 12. ...and the superheros over 450 in weight. Bonus question! Why do we not have 16 rows in question #10?
 ```{r}
 superhero_info %>% 
-  filter(weight>=450) %>% 
-  select(name,height,weight)
+  filter(weight>450) %>% 
+  select(name,weight)
 ```
 
 ## Height to Weight Ratio
 13. It's easy to be strong when you are heavy and tall, but who is heavy and short? Which superheros have the highest height to weight ratio?
 ```{r}
 superhero_info %>% 
-  filter(weight>=600 & height<=300) %>% 
+  filter(height<=300 & weight>600) %>% 
   select(name,height,weight)
 #Giganta has the highest height to weight ratio.
 ```
@@ -174,15 +173,13 @@ superhero_powers %>%
   filter(accelerated_healing==T, durability==T,super_strength==T) %>% 
   select(hero_names,accelerated_healing,durability,super_strength)
 ```
-```{r}
-view(superhero_powers)
-```
 
 ## Your Favorite
 15. Pick your favorite superhero and let's see their powers!
 ```{r}
 superhero_powers %>% 
-  filter(hero_names=="Black Widow")
+  filter(hero_names=="Black Widow") %>% 
+  select_if(all_vars(.=="TRUE"))
 ```
 
 ## Push your final code to GitHub!
