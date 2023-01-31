@@ -1,6 +1,6 @@
 ---
 title: "Midterm 1"
-author: "Please Add Your Name Here"
+author: "Imen Belhadj"
 date: "`r Sys.Date()`"
 output:
   html_document: 
@@ -21,8 +21,8 @@ Make sure to use the formatting conventions of RMarkdown to make your report nea
 
 Please load the following libraries.
 ```{r}
-library(tidyverse)
-library(janitor)
+library("tidyverse")
+library("janitor")
 ```
 
 In the midterm 1 folder there is a second folder called `data`. Inside the `data` folder, there is a .csv file called `ecs21351-sup-0003-SupplementS1.csv`. These data are from Soykan, C. U., J. Sauer, J. G. Schuetz, G. S. LeBaron, K. Dale, and G. M. Langham. 2016. Population trends for North American winter birds based on hierarchical models. Ecosphere 7(5):e01351. 10.1002/ecs2.1351.  
@@ -36,22 +36,25 @@ ecosphere <- read_csv("data/ecs21351-sup-0003-SupplementS1.csv", skip=2) %>%
 
 Problem 1. (1 point) Let's start with some data exploration. What are the variable names?
 ```{r}
-
+names(ecosphere)
 ```
 
 Problem 2. (1 point) Use the function of your choice to summarize the data.
 ```{r}
-
+summary(ecosphere)
 ```
 
 Problem 3. (2 points) How many distinct orders of birds are represented in the data?
 ```{r}
-
+ecosphere %>% 
+  count(order)
 ```
 
 Problem 4. (2 points) Which habitat has the highest diversity (number of species) in the data?
 ```{r}
-
+ecosphere %>% 
+  count(habitat,sort=T)
+#Woodland has the highest species diversity.
 ```
 
 Run the code below to learn about the `slice` function. Look specifically at the examples (at the bottom) for `slice_max()` and `slice_min()`. If you are still unsure, try looking up examples online (https://rpubs.com/techanswers88/dplyr-slice). Use this new function to answer question 5 below.
@@ -61,51 +64,78 @@ Run the code below to learn about the `slice` function. Look specifically at the
 
 Problem 5. (4 points) Using the `slice_max()` or `slice_min()` function described above which species has the largest and smallest winter range?
 ```{r}
-
+slice_max(ecosphere,winter_range_area)
 ```
 
 ```{r}
-
+slice_min(ecosphere,winter_range_area)
 ```
 
 Problem 6. (2 points) The family Anatidae includes ducks, geese, and swans. Make a new object `ducks` that only includes species in the family Anatidae. Restrict this new dataframe to include all variables except order and family.
 ```{r}
-
+ducks<-ecosphere %>% 
+  filter(family=="Anatidae") %>% 
+  select(-order,-family)
+ducks
 ```
 
 Problem 7. (2 points) We might assume that all ducks live in wetland habitat. Is this true for the ducks in these data? If there are exceptions, list the species below.
 ```{r}
-
+ducks %>% 
+  filter(habitat!="Woodland") %>% 
+  select(common_name,scientific_name)
 ```
 
 Problem 8. (4 points) In ducks, how is mean body mass associated with migratory strategy? Do the ducks that migrate long distances have high or low average body mass?
 ```{r}
-
+ducks %>% 
+  filter(migratory_strategy=="Long") %>% 
+  summarise(log10_mass=mean(log10_mass))
 ```
 
+```{r}
+ducks %>% 
+  filter(migratory_strategy=="Short") %>% 
+  summarise(log10_mass=mean(log10_mass))
+            
+```
 Problem 9. (2 points) Accipitridae is the family that includes eagles, hawks, kites, and osprey. First, make a new object `eagles` that only includes species in the family Accipitridae. Next, restrict these data to only include the variables common_name, scientific_name, and population_size.
 ```{r}
-
+eagles<-ecosphere %>% 
+  filter(family=="Accipitridae") 
+eagles %>% 
+  select(common_name,scientific_name,population_size)
 ```
 
 Problem 10. (4 points) In the eagles data, any species with a population size less than 250,000 individuals is threatened. Make a new column `conservation_status` that shows whether or not a species is threatened.
 ```{r}
-
+eagles2<-eagles %>% 
+  mutate(conservation_status = population_size<250000) 
+eagles2
 ```
 
 Problem 11. (2 points) Consider the results from questions 9 and 10. Are there any species for which their threatened status needs further study? How do you know?
 ```{r}
-
+#eagles2 %>% 
+ #select(common_name,conservation_status==NA) 
 ```
 
 Problem 12. (4 points) Use the `ecosphere` data to perform one exploratory analysis of your choice. The analysis must have a minimum of three lines and two functions. You must also clearly state the question you are attempting to answer.
+#What bird is most worth it to raise as livestock?
 ```{r}
-
+best_bird<-ecosphere %>% 
+  group_by(common_name) %>% 
+  filter(order=="Galliformes"& diet=="Seed") %>% 
+  summarise(most_eggs_per_clutch=max(mean_eggs_per_clutch), 
+              fastest_growing=min(mean_age_at_sexual_maturity),least_space=min(range_in_cbc),
+              total=n()) 
+best_bird
+#The best bird to raise as livestock is the bird that lays the most eggs per clutch, is the fastest growing, and takes up the least space, the Northern Bobwhite.
 ```
 
 Please provide the names of the students you have worked with with during the exam:
 ```{r}
-
+#Abigail Omaque
 ```
 
 Please be 100% sure your exam is saved, knitted, and pushed to your github repository. No need to submit a link on canvas, we will find your exam in your repository.
