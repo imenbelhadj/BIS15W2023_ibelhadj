@@ -18,8 +18,8 @@ output:
 
 ## Load the libraries
 ```{r message=FALSE, warning=FALSE}
-library("tidyverse")
-library("janitor")
+#library("tidyverse")
+#library("janitor")
 library("skimr")
 library("palmerpenguins")
 ```
