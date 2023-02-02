@@ -11911,23 +11911,11 @@ were caught as part of these data?</li>
 <ol start="6" style="list-style-type: decimal">
 <li>Which country had the largest overall catch in the year 2000?</li>
 </ol>
-<pre class="r"><code>new_fisheries %&gt;% 
-  filter(year==&#39;2000&#39;) %&gt;% 
-  summarize(year==&#39;2000&#39;,largest_catch=max(catch,na.rm=T))</code></pre>
-<pre><code>## # A tibble: 8,793 × 2
-##    `year == &quot;2000&quot;` largest_catch
-##    &lt;lgl&gt;                    &lt;dbl&gt;
-##  1 TRUE                      9068
-##  2 TRUE                      9068
-##  3 TRUE                      9068
-##  4 TRUE                      9068
-##  5 TRUE                      9068
-##  6 TRUE                      9068
-##  7 TRUE                      9068
-##  8 TRUE                      9068
-##  9 TRUE                      9068
-## 10 TRUE                      9068
-## # … with 8,783 more rows</code></pre>
+<pre class="r"><code>#new_fisheries %&gt;% 
+  #filter(year==&#39;2000&#39;) %&gt;% 
+  #arrange(desc(catch)) %&gt;% 
+  #select(country,catch) %&gt;% 
+  #head(n)</code></pre>
 <pre class="r"><code>new_fisheries %&gt;% 
   filter(year==&#39;2000&#39;,catch==&#39;9068&#39;) %&gt;% 
   select(country,year,catch)</code></pre>
@@ -11940,43 +11928,423 @@ were caught as part of these data?</li>
 between the years 1990-2000?</li>
 </ol>
 <pre class="r"><code>new_fisheries %&gt;% 
-  group_by(country) %&gt;% 
   filter(year&gt;=1990 &amp; year&lt;=2000, asfis_species_name==&quot;Sardina pilchardus&quot;) %&gt;% 
-  summarise(max_catch=max(catch,na.rm = T))</code></pre>
-<pre><code>## # A tibble: 37 × 2
-##    country  max_catch
-##    &lt;chr&gt;        &lt;dbl&gt;
-##  1 Albania         50
-##  2 Algeria         95
-##  3 Belize           9
-##  4 Bulgaria        48
-##  5 China            8
-##  6 Croatia         94
-##  7 Cyprus          12
-##  8 Denmark         96
-##  9 Estonia         20
-## 10 France          97
-## # … with 27 more rows</code></pre>
+  group_by(country) %&gt;% 
+  summarise(max_catch=max(catch,na.rm = T)) %&gt;% 
+  arrange(desc(max_catch)) %&gt;% 
+  head(n=1) #or slice</code></pre>
+<pre><code>## # A tibble: 1 × 2
+##   country max_catch
+##   &lt;chr&gt;       &lt;dbl&gt;
+## 1 Morocco       947</code></pre>
 <pre class="r"><code>#Morocco had the biggest catch of sardines from 1990-2000.</code></pre>
 <ol start="8" style="list-style-type: decimal">
 <li>Which five countries caught the most cephalopods between
 2008-2012?</li>
 </ol>
-<pre class="r"><code>#fisheries_tidy %&gt;% 
-  #group_by(country) %&gt;%   
-  #filter(isscaap_taxonomic_group==&quot;Squids,cuttlefishes,octopuses&quot;)%&gt;%   
-  #filter(between(year,2008,2012)) %&gt;% 
-  #summarise(cephalopods_catch=sum(catch,na.rm=T)) %&gt;% 
-  #arrange(desc(cephalopods_catch)) %&gt;% 
-  #head(n=5)</code></pre>
+<pre class="r"><code>fisheries_tidy %&gt;% 
+  filter(isscaap_taxonomic_group==&quot;Squids, cuttlefishes, octopuses&quot;) %&gt;% 
+ filter(between(year,2008,2012)) %&gt;% 
+ group_by(country) %&gt;% 
+ summarise(cephalopods_catch=sum(catch,na.rm=T)) %&gt;% 
+ arrange(desc(cephalopods_catch)) %&gt;% 
+ head(n=5)</code></pre>
+<pre><code>## # A tibble: 5 × 2
+##   country            cephalopods_catch
+##   &lt;chr&gt;                          &lt;dbl&gt;
+## 1 China                           8349
+## 2 Korea, Republic of              3480
+## 3 Peru                            3422
+## 4 Japan                           3248
+## 5 Chile                           2775</code></pre>
 <ol start="9" style="list-style-type: decimal">
 <li>Which species had the highest catch total between 2008-2012? (hint:
 Osteichthyes is not a species)</li>
 </ol>
-<pre class="r"><code>#fisheries_tidy %&gt;% 
-  #group_by(asfis_species_name) %&gt;%
-  #filter(between(year,2008,2012)) %&gt;% 
-  #summarise(highest_catch=max(catch,na.rm=T))</code></pre>
+<pre class="r"><code>fisheries_tidy %&gt;% 
+  filter(between(year,2008,2012)) %&gt;% 
+  group_by(asfis_species_name) %&gt;%
+  summarise(highest_catch=max(catch,na.rm=T))</code></pre>
+<pre><code>## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf
+
+## Warning in max(catch, na.rm = T): no non-missing arguments to max; returning
+## -Inf</code></pre>
+<pre><code>## # A tibble: 1,472 × 2
+##    asfis_species_name        highest_catch
+##    &lt;chr&gt;                             &lt;dbl&gt;
+##  1 Ablennes hians                       26
+##  2 Abramis brama                        61
+##  3 Abramis spp                           9
+##  4 Acanthistius brasilianus             56
+##  5 Acanthocybium solandri               98
+##  6 Acanthopagrus berda                  49
+##  7 Acanthopagrus bifasciatus            95
+##  8 Acanthopagrus latus                  41
+##  9 Acanthopagrus schlegeli            -Inf
+## 10 Acanthuridae                         70
+## # … with 1,462 more rows</code></pre>
+<pre class="r"><code>fisheries_tidy %&gt;% 
+  filter(between(year,2008,2012)) %&gt;% 
+  group_by(asfis_species_name) %&gt;% 
+  summarise(total_catch=sum(catch,na.rm=T)) %&gt;% 
+  arrange(desc(total_catch)) %&gt;% 
+  head(n=1)</code></pre>
+<pre><code>## # A tibble: 1 × 2
+##   asfis_species_name total_catch
+##   &lt;chr&gt;                    &lt;dbl&gt;
+## 1 Osteichthyes            107808</code></pre>
 <ol start="10" style="list-style-type: decimal">
 <li>Use the data to do at least one analysis of your choice.</li>
 </ol>
