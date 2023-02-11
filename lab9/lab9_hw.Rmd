@@ -19,11 +19,11 @@ Make sure to use the formatting conventions of RMarkdown to make your report nea
 
 ## Load the libraries
 ```{r message=FALSE, warning=FALSE}
-#library("tidyverse")
-#library("janitor")
-#library("here")
-#library("naniar")
-#library("dplyr")
+library("tidyverse")
+library("janitor")
+library("here")
+library("naniar")
+library("dplyr")
 ``` 
 
 For this homework, we will take a departure from biological data and use data about California colleges. These data are a subset of the national college scorecard (https://collegescorecard.ed.gov/data/). Load the `ca_college_data.csv` as a new object called `colleges`.
