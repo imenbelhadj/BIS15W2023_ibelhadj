@@ -90,6 +90,8 @@ surgery %>%
 ##        <int>
 ## 1       3783
 ```
+
+
 2. (3 points) Let's explore the participants in the study. Show a count of participants by race AND make a plot that visually represents your output.
 
 ```r
@@ -109,61 +111,65 @@ surgery %>%
 
 ```r
 surgery %>% 
+  filter(!(is.na(race))) %>% 
   count(race) %>% ggplot(aes(x=race,y=n, na.rm=T))+geom_col()
 ```
 
-![](midterm_2_files/figure-html/unnamed-chunk-7-1.png)<!-- -->
+![](midterm_2_files/figure-html/unnamed-chunk-8-1.png)<!-- -->
 
 
 3. (2 points) What is the mean age of participants by gender? (hint: please provide a number for each) Since only three participants do not have gender indicated, remove these participants from the data.
 
 ```r
 surgery %>% 
+  filter(!(is.na(gender))) %>% 
   group_by(gender) %>% 
   summarize(mean_age=mean(age,na.rm=T))
 ```
 
 ```
-## # A tibble: 3 × 2
+## # A tibble: 2 × 2
 ##   gender mean_age
 ##   <chr>     <dbl>
 ## 1 F          56.7
 ## 2 M          58.8
-## 3 <NA>       51.8
 ```
 
 4. (3 points) Make a plot that shows the range of age associated with gender.
 
 ```r
 surgery %>% 
+  filter(!(is.na(gender))) %>% 
   ggplot(aes(x=gender,y=age))+geom_boxplot(na.rm=T)
 ```
 
-![](midterm_2_files/figure-html/unnamed-chunk-9-1.png)<!-- -->
+![](midterm_2_files/figure-html/unnamed-chunk-10-1.png)<!-- -->
 
 5. (2 points) How healthy are the participants? The variable `asa_status` is an evaluation of patient physical status prior to surgery. Lower numbers indicate fewer comorbidities (presence of two or more diseases or medical conditions in a patient). Make a plot that compares the number of `asa_status` I-II, III, and IV-V.
 
 ```r
 surgery %>% 
+  filter(!(is.na(asa_status))) %>% 
   count(asa_status) %>% 
   ggplot(aes(x=asa_status,y=n, na.rm=T))+geom_col()
 ```
 
-![](midterm_2_files/figure-html/unnamed-chunk-10-1.png)<!-- -->
+![](midterm_2_files/figure-html/unnamed-chunk-11-1.png)<!-- -->
 
 6. (3 points) Create a plot that displays the distribution of body mass index for each `asa_status` as a probability distribution- not a histogram. (hint: use faceting!)
 
 ```r
 surgery %>% 
-  ggplot(aes(x=asa_status,y=bmi))+ 
-  geom_boxplot()+facet_wrap(~asa_status, ncol = 6)
+  filter(!(is.na(asa_status))) %>% 
+  ggplot(aes(x=bmi))+ 
+  geom_density()+facet_wrap(~asa_status, ncol = 6)
 ```
 
 ```
-## Warning: Removed 3290 rows containing non-finite values (`stat_boxplot()`).
+## Warning: Removed 3289 rows containing non-finite values (`stat_density()`).
 ```
 
-![](midterm_2_files/figure-html/unnamed-chunk-11-1.png)<!-- -->
+![](midterm_2_files/figure-html/unnamed-chunk-12-1.png)<!-- -->
 
 The variable `ccsmort30rate` is a measure of the overall 30-day mortality rate associated with each type of operation. The variable `ccscomplicationrate` is a measure of the 30-day in-hospital complication rate. The variable `ahrq_ccs` lists each type of operation.  
 
@@ -215,13 +221,58 @@ surgery %>%
   ggplot(aes(x=ahrq_ccs,y=ccsmort30rate))+geom_col()+coord_flip()
 ```
 
-![](midterm_2_files/figure-html/unnamed-chunk-14-1.png)<!-- -->
-
+![](midterm_2_files/figure-html/unnamed-chunk-15-1.png)<!-- -->
 
 9. (4 points) When is the best month to have surgery? Make a chart that shows the 30-day mortality and complications for the patients by month. `mort30` is the variable that shows whether or not a patient survived 30 days post-operation.
 
+```r
+surgery %>% 
+  mutate(mort30_count=ifelse(mort30=="Yes",1,0), complication_count=(if_else(complication=="Yes",1,0))) %>% 
+  group_by(month) %>% 
+  summarise(deaths=sum(mort30_count), complications=sum(complication_count))
+```
+
+```
+## # A tibble: 12 × 3
+##    month deaths complications
+##    <chr>  <dbl>         <dbl>
+##  1 Apr       12           321
+##  2 Aug        9           462
+##  3 Dec        4           237
+##  4 Feb       17           343
+##  5 Jan       19           407
+##  6 Jul       12           301
+##  7 Jun       14           410
+##  8 Mar       12           324
+##  9 May       10           333
+## 10 Nov        5           325
+## 11 Oct        8           377
+## 12 Sep       16           424
+```
+
+
 10. (4 points) Make a plot that visualizes the chart from question #9. Make sure that the months are on the x-axis. Do a search online and figure out how to order the months Jan-Dec.
 
-Please provide the names of the students you have worked with with during the exam:
+```r
+surgery %>% 
+  mutate(mort30_count=ifelse(mort30=="Yes",1,0), complication_count=(if_else(complication=="Yes",1,0))) %>% 
+  group_by(month) %>% 
+  summarise(deaths=sum(mort30_count), complications=sum(complication_count)) %>% 
+  ggplot(aes(x=month,y=complications))+geom_col()
+```
 
+![](midterm_2_files/figure-html/unnamed-chunk-17-1.png)<!-- -->
+
+```r
+surgery %>% 
+  mutate(mort30_count=ifelse(mort30=="Yes",1,0), complication_count=(if_else(complication=="Yes",1,0))) %>% 
+  group_by(month) %>% 
+  summarise(deaths=sum(mort30_count), complications=sum(complication_count)) %>% 
+  ggplot(aes(x=month,y=deaths))+geom_col()
+```
+
+![](midterm_2_files/figure-html/unnamed-chunk-18-1.png)<!-- -->
+
+Please provide the names of the students you have worked with with during the exam:
+Khushleen Kaur, Abigail Omaque
 Please be 100% sure your exam is saved, knitted, and pushed to your github repository. No need to submit a link on canvas, we will find your exam in your repository.
