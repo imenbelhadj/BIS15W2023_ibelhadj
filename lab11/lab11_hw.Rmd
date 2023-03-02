@@ -128,7 +128,10 @@ gapminder %>%  mutate("pop_growth"=max(gdpPercap)-min(gdpPercap)) %>%
 
 **10. Make one plot of your choice that uses faceting!**
 ```{r}
-
+gapminder %>% 
+  ggplot(aes(x=lifeExp))+ 
+  geom_boxplot()+ 
+  facet_grid(year~continent)
 ```
 
 
