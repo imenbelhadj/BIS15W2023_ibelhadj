@@ -1,6 +1,6 @@
 ---
 title: "Lab 14 Homework"
-author: "Your Name Here"
+author: "Imen Belhadj"
 date: "`r Sys.Date()`"
 output:
   html_document: 
@@ -21,28 +21,36 @@ Answer the following questions in RMarkdown. Please embed all of your code and p
 ## Questions
 
 1. Look up 'Data Scientist' at https://www.bls.gov/. What degree is required for this career? Is it a growing occupation?  
-
+Typically, a bachelor's degree in mathematics, statistics, computer science, or a related field is required. It's growing at a rate of 36%, which is very fast.
 
 2. How would you describe your data science skills on a resume for a job application? Write a blurb that reflects the skills you have learned in this course. 
+
+"Experience using the R programming language to clean, visualize, analyze, and make models of trends in big datasets."
 
 
 3. What are your current career interests, and how could your R skills support that career path? (hint: this might be good content for your LinkedIn profile ;)
 
+I'm undecided, but I am leaning toward either computational biology or computational linguistics. Both fields require data analysis to make advancements and to create adequate artificial systems. The skills I've gained in this class are useful if I want to work in a lab or for a company.
 
 4. What about this course has been the most difficult for you? What has been the most rewarding?
 
+The most difficult part for me was how frustrating R Studio can be with so errors, and I had a lot of trouble understanding how to fix my code once the graphs became more complex. The part I enjoyed the most was learning how to filter, select, and summarise certain parts of the dataset, I think that will be the most useful thing I take away from this class. I also really enjoyed maps.
 
 5. What do you wish you had known, or what skills do you wish you had, before taking this class.
 
+I wish I had been told about the relatively heavy workload for the number of units. 
 
 6. If we had 1 more lab in this class, what would you have liked to learn more about?
 
+If we had an extra lab, I would want to learn what exact skills in R or in other languages it takes to get hired as a data scientist aside from what we do in class. Like a video about each important skill so that it's easier to plan coursework or know what to seek outside of school.
 
-7. Now that you have (almost!) completed this course, do you plan to persue further data or computer science skills? What do you plan to do?
+7. Now that you have (almost!) completed this course, do you plan to pursue further data or computer science skills? What do you plan to do?
 
+I'm also learning Python this year, C/C++ next year, but I'm not sure what I will do after that.
 
 8. How important was working with a partner to your success in this class? If this class were transitioned to an online format, how do you think that would affect your understanding?
 
+I think an online format would be much harder for me because I asked a lot of questions as soon as I had them and could get help right away when I had an issue. This class would be okay online if it was not for students with no prior experience.
 
 9. Did you complete the class evaluation? Please complete the class evaluation using the link provided in the announcements. Your feedback is very important and we appreciate your time.
 
